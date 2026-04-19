@@ -28,7 +28,7 @@ def handler(event: dict, context) -> dict:
     item_icon = body.get("item_icon", "")
     now = datetime.now().strftime("%d.%m.%Y %H:%M")
 
-    smtp_user = "server2012@internet.ru"
+    smtp_user = "serverminecraft1@list.ru"
     smtp_password = os.environ.get("SMTP_PASSWORD", "")
     to_email = "server2012@internet.ru"
 
@@ -127,7 +127,7 @@ def handler(event: dict, context) -> dict:
 
     msg.attach(MIMEText(html, "html", "utf-8"))
 
-    # Отправка через SMTP mail.ru (internet.ru входит в mail.ru group)
+    # Отправка через SMTP mail.ru (list.ru входит в mail.ru group)
     with smtplib.SMTP_SSL("smtp.mail.ru", 465) as server:
         server.login(smtp_user, smtp_password)
         server.sendmail(smtp_user, to_email, msg.as_string())
