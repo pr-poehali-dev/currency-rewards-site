@@ -304,6 +304,7 @@ export default function Index() {
   const [toast, setToast] = useState<{ nick: string; item: DonateItem } | null>(null);
   const [balanceBump, setBalanceBump] = useState(false);
   const [nextId, setNextId] = useState(1);
+  const [adminCoins, setAdminCoins] = useState("");
 
   const bump = () => { setBalanceBump(true); setTimeout(() => setBalanceBump(false), 400); };
 
@@ -564,6 +565,43 @@ export default function Index() {
                 </div>
               ))}
             </div>
+            {/* Admin: выдача монет */}
+            <div className="rounded-2xl p-5 border mb-4" style={{ background: "hsl(230 25% 9%)", borderColor: "hsl(280 70% 40% / 0.5)" }}>
+              <h4 className="text-gray-300 font-semibold mb-3 flex items-center gap-2">
+                <Icon name="Shield" size={16} className="text-purple-400" />
+                <span className="text-purple-400">Админ — выдача монет</span>
+              </h4>
+              <div className="flex gap-2">
+                {[100, 500, 1000].map(amt => (
+                  <button key={amt} onClick={() => { setBalance(b => b + amt); bump(); }}
+                    className="flex-1 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+                    style={{ background: "hsl(280 70% 40% / 0.2)", border: "1px solid hsl(280 70% 40% / 0.4)", color: "hsl(280 70% 75%)" }}>
+                    +{amt}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2 mt-2">
+                <input
+                  type="number"
+                  value={adminCoins}
+                  onChange={e => setAdminCoins(e.target.value)}
+                  placeholder="Своя сумма..."
+                  className="flex-1 px-3 py-2 rounded-xl text-white text-sm placeholder-gray-600 outline-none"
+                  style={{ background: "hsl(230 25% 12%)", border: "1px solid hsl(260 20% 25%)" }}
+                  min={1}
+                />
+                <button
+                  onClick={() => {
+                    const n = Number(adminCoins);
+                    if (n > 0) { setBalance(b => b + n); bump(); setAdminCoins(""); }
+                  }}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+                  style={{ background: "hsl(280 70% 40% / 0.25)", border: "1px solid hsl(280 70% 40% / 0.5)", color: "hsl(280 70% 75%)" }}>
+                  Выдать
+                </button>
+              </div>
+            </div>
+
             {quests.length > 0 && (
               <div className="rounded-2xl p-5 border border-border" style={{ background: "hsl(230 25% 9%)" }}>
                 <h4 className="text-gray-300 font-semibold mb-4 flex items-center gap-2">
