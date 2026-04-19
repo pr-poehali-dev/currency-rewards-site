@@ -319,17 +319,11 @@ export default function Index() {
 
   const handleBuy = async (nick: string, item: DonateItem) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mod = await import("../../func2url.json") as any;
-      const urls = mod.default ?? mod;
-      const url: string = urls["send-purchase-email"] ?? "";
-      if (url) {
-        await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nick, item_name: item.name, item_price: item.price, item_icon: item.icon }),
-        });
-      }
+      await fetch("https://functions.poehali.dev/86d8522e-2351-46b5-9eef-46e604126a93", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nick, item_name: item.name, item_price: item.price, item_icon: item.icon }),
+      });
     } catch (_) { /* не критично */ }
 
     setBalance(b => b - item.price);
