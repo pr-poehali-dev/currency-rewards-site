@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Send purchase email",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "nick": "TestPlayer",
+        "item_name": "Тестовый товар",
+        "item_price": 100,
+        "item_icon": "⚔️"
+      },
+      "expectedStatus": 200,
+      "expectedBody": { "ok": true },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
